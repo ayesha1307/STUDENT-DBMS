@@ -1,0 +1,83 @@
+#include <iostream>
+#include <string>
+
+class Student {
+public:
+    // Constructor
+    Student();
+
+    // Member functions
+    void inputStudentData();
+    void displayStudentData() const;
+
+private:
+    std::string name;
+    int rollNumber;
+    double marks;
+};
+
+// Constructor
+Student::Student() : name(""), rollNumber(0), marks(0.0) {}
+
+// Member function to input data for a student
+void Student::inputStudentData() {
+    std::cout << "Enter student name: ";
+    std::getline(std::cin, name);
+
+    std::cout << "Enter roll number: ";
+    std::cin >> rollNumber;
+
+    std::cout << "Enter marks: ";
+    std::cin >> marks;
+
+    // Clear the input buffer
+    while (std::cin.get() != '\n') continue;
+}
+
+// Member function to display data for a student
+void Student::displayStudentData() const {
+    std::cout << "Name: " << name << std::endl;
+    std::cout << "Roll Number: " << rollNumber << std::endl;
+    std::cout << "Marks: " << marks << std::endl;
+}
+
+int main() {
+    const int maxStudents = 100; // Maximum number of students
+    Student students[maxStudents];
+
+    int numStudents;
+    std::cout << "Enter the number of students: ";
+    std::cin >> numStudents;
+
+    // Validate input
+    if (numStudents <= 0 || numStudents > maxStudents) {
+        std::cout << "Invalid number of students. Exiting program.\n";
+        return 1;
+    }
+
+    // Clear the input buffer
+    while (std::cin.get() != '\n') continue;
+
+    // Input data for each student
+    for (int i = 0; i < numStudents; ++i) {
+        std::cout << "\nEnter data for student " << i + 1 << ":\n";
+        students[i].inputStudentData();
+    }
+
+    // Display data for a specific student
+    int studentIndex;
+    std::cout << "\nEnter the index of the student you want to display (0 to " << numStudents - 1 << "): ";
+    std::cin >> studentIndex;
+
+    // Check if the index is valid
+    if (studentIndex >= 0 && studentIndex < numStudents) {
+        // Display the data for the selected student
+        std::cout << "\nStudent data for index " << studentIndex << ":\n";
+        students[studentIndex].displayStudentData();
+    } else {
+        std::cout << "Invalid index. Exiting program.\n";
+        return 1;
+    }
+
+    return 0;
+}
